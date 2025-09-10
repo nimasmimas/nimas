@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שאלון החזר מס מקצועי</title>
+    
+    <!-- Bootstrap RTL CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts Hebrew -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #4facfe;
+            --warning-color: #feca57;
+            --danger-color: #ff6b9d;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container-fluid {
+            padding: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="rgba(255,255,255,.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><rect width="100" height="20" fill="url(%23a)"/></svg>');
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-subtitle {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .form-check-label {
+            font-size: 1rem;
+            margin-right: 0.8rem;
+        }
+
+        /* Question Item Styling */
+        .question-item {
+            background: rgba(255,255,255,0.7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .help-icon {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .help-icon:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            transform: scale(1.3);
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #666;
+        }
+
+        /* Button Styling */
+        .btn {
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            min-height: 50px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #5a6fdd, #6a4190);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #00b4db);
+            color: white;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 3rem;
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(108, 117, 125, 0.2);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transition: width 0.5s ease;
+        }
+
+        /* Summary and Results */
+        .results-container {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .summary-list {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            text-align: right;
+        }
+
+        .summary-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Tooltip Styling */
+        .tooltip {
+            background: var(--dark-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 300px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 2rem 1rem;
+                margin: 1rem;
+                border-radius: 15px;
+            }
+            
+            .step-title {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .checkbox-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .form-control, .form-select {
+                font-size: 16px; /* Prevents zoom on iOS */
+                min-height: 50px;
+            }
+        }
+
+        /* Animation for confetti */
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <h1><i class="fas fa-file-invoice-dollar"></i> שאלון החזר מס מקצועי</h1>
+            <p>בואו נבדוק יחד אילו מסמכים נדרשים לך להחזר מס מקסימלי</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar" style="width: 12.5%"></div>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <!-- Step 1: Personal Information -->
+                <div class="step active" id="step1">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h2 class="step-title">פרטים אישיים</h2>
+                        <p class="step-subtitle">נתחיל עם המידע הבסיסי עליך ועל המשפחה</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">שם פרטי</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="הכנס שם פרטי">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">שם משפחה</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="הכנס שם משפחה">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">כתובת מייל</label>
+                                <input type="email" class="form-control" id="email" placeholder="example@email.com">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">גיל</label>
+                                <input type="number" class="form-control" id="age" placeholder="25" min="18" max="120">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">מין</label>
+                                <select class="form-select" id="gender">
+                                    <option value="">בחר מין</option>
+                                    <option value="male">זכר</option>
+                                    <option value="female">נקבה</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">סטטוס אישי</label>
+                                <select class="form-select" id="maritalStatus">
+                                    <option value="">בחר סטטוס</option>
+                                    <option value="single">רווק/ה</option>
+                                    <option value="married">נשוי/אה</option>
+                                    <option value="divorced">גרוש/ה</option>
+                                    <option value="widowed">אלמן/ה</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">האם שני בני הזוג שכירים?</label>
+                                <select class="form-select" id="bothEmployed">
+                                    <option value="">בחר תשובה</option>
+                                    <option value="yes">כן</option>
+                                    <option value="no">לא</option>
+                                    <option value="not-applicable">לא רלוונטי (רווק/ה)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">האם עשית החזר מס ב-6 השנים האחרונות?</label>
+                                <select class="form-select" id="prevRefund">
+                                    <option value="">בחר תשובה</option>
+                                    <option value="no">לא</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6" id="marriageYearDiv" style="display:none;">
+                            <div class="form-group">
+                                <label class="form-label">באיזה שנה התחתנתם?</label>
+                                <input type="number" class="form-control" id="marriageYear" placeholder="2020" min="1950" max="2024">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">האם היית בשנת שבתון באחת מ-6 השנים האחרונות?</label>
+                                <select class="form-select" id="sabbaticalYear">
+                                    <option value="">בחר תשובה</option>
+                                    <option value="no">לא</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary" onclick="nextStep()">
+                            המשך <i class="fas fa-arrow-left ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Salaries and Benefits -->
+                <div class="step" id="step2">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h2 class="step-title">קצבאות ותגמולים</h2>
+                        <p class="step-subtitle">סמן את הרלוונטי עבורך ועבור בן/בת הזוג</p>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישורים על הכנסות ממשכורת - טופס 106
+                            <span class="help-icon" title="טופס המעסיק על הכנסות ומס ששולם במהלך השנה">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="salary_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="salary_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            דמי אבטלה
+                            <span class="help-icon" title="אישורים על תשלומי אבטלה שקיבלת מהמוסד לביטוח לאומי">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="unemployment_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="unemployment_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישורים על הכנסות מקצבאות הביטוח הלאומי - אובדן כושר עבודה
+                            <span class="help-icon" title="קצבאות נכות או אובדן כושר עבודה מביטוח לאומי">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="disability_pension_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="disability_pension_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            שכר כפרילנסר
+                            <span class="help-icon" title="הכנסות מעבודה עצמאית ופרילנס">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="freelance_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="freelance_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישורים על משיכת מענקי פרישה (פיצויים)
+                            <span class="help-icon" title="תשלומי פיצויי פרישה ומענקי פרישה">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="severance_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="severance_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            פנסיה וקצבה
+                            <span class="help-icon" title="קצבאות פנסיה מקרנות פנסיה">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pension_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pension_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישורים על פדיונות קופות גמל וקרנות השתלמות
+                            <span class="help-icon" title="משיכות מקופות גמל וקרנות השתלמות">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="savings_funds_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="savings_funds_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            הענקות הוניות ממעסיק - ניתן לקיזוז מול תיק השקעות
+                            <span class="help-icon" title="הענקות מניות ואופציות מהמעסיק">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="employer_grants_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="employer_grants_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-secondary me-3" onclick="prevStep()">
+                            <i class="fas fa-arrow-right me-2"></i> חזרה
+                        </button>
+                        <button class="btn btn-primary" onclick="nextStep()">
+                            המשך <i class="fas fa-arrow-left ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Disability and Family -->
+                <div class="step" id="step3">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h2 class="step-title">נכות ומצב משפחתי</h2>
+                        <p class="step-subtitle">נכויות, ילדים וסטטוס משפחתי מיוחד</p>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            בקשה להקלה במס ליחיד שזכאי לתואר אקדמי/תעודת מקצוע
+                            <span class="help-icon" title="זיכוי מס לבעלי השכלה גבוהה עם הכנסה נמוכה">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="academic_relief_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="academic_relief_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            ילדים, האם מקבל עליהם קצבת ילדים?
+                            <span class="help-icon" title="נקודות זיכוי על ילדים שמקבלים עליהם קצבת ילדים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="child_allowance_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="child_allowance_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישור על תשלום דמי מזונות
+                            <span class="help-icon" title="ניכוי דמי מזונות שמשלמים לילדים מנישואין קודמים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="alimony_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="alimony_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            למי שנשוי בשנית, האם מקיים משק בית משותף?
+                            <span class="help-icon" title="זיכוי מס למי שנשוי בשנית ומקיים משק בית משותף">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="shared_household_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="shared_household_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישורים על הכנסות מקצבאות הביטוח הלאומי - דמי לידה, שמירת הריון
+                            <span class="help-icon" title="תשלומי דמי לידה ושמירת הריון מביטוח לאומי">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="maternity_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="maternity_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישור על שחרור מצה"ל (למשוחררים טריים)/שירות לאומי
+                            <span class="help-icon" title="זיכוי מס למשוחררים חדשים מצה״ל או שירות לאומי">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="military_discharge_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="military_discharge_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישורים על הכנסות מקצבאות הביטוח הלאומי - מילואים (תשלומים ישירים מביטוח לאומי)
+                            <span class="help-icon" title="תשלומי פיצוי על שירות מילואים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="reserves_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="reserves_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            מענקי מילואים מקרן הסיוע שאינם החזרי הוצאות
+                            <span class="help-icon" title="מענקים מיוחדים למילואימניקים מקרנות סיוע">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="reserves_grants_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="reserves_grants_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישור על תאריך עליה (לעולים חדשים)
+                            <span class="help-icon" title="זיכויים מיוחדים לעולים חדשים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="new_immigrant_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="new_immigrant_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            תושב חוזר
+                            <span class="help-icon" title="זיכויים לתושבי חוזרים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="returning_resident_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="returning_resident_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            אישור על התגוררות בישוב ספר מזכה
+                            <span class="help-icon" title="זיכוי מס לתושבי אזורי עדיפות לאומית">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="priority_area_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="priority_area_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-secondary me-3" onclick="prevStep()">
+                            <i class="fas fa-arrow-right me-2"></i> חזרה
+                        </button>
+                        <button class="btn btn-primary" onclick="nextStep()">
+                            המשך <i class="fas fa-arrow-left ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Capital Market -->
+                <div class="step" id="step4">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h2 class="step-title">שוק הון</h2>
+                        <p class="step-subtitle">השקעות, מניות ואגרות חוב</p>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            רווחי הון ממכירת נכסים
+                            <span class="help-icon" title="רווחים ממכירת דירות, מקרקעין או נכסי השקעה">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capital_gains_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capital_gains_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            דיבידנדים ממניות
+                            <span class="help-icon" title="דיבידנדים שהתקבלו מחברות ישראליות וזרות">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="dividends_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="dividends_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            ריבית מפקדונות וחסכונות
+                            <span class="help-icon" title="הכנסות ריבית מחשבונות בנק ופקדונות">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="interest_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="interest_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            הפסדי הון לקיזוז
+                            <span class="help-icon" title="הפסדים מהשקעות שניתן לקזז מול רווחי הון">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capital_losses_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="capital_losses_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            הכנסות מחו"ל שלא נוכה מהן מס מקור
+                            <span class="help-icon" title="הכנסות מחו״ל שטרם שולם עליהן מס בישראל">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="foreign_income_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="foreign_income_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-secondary me-3" onclick="prevStep()">
+                            <i class="fas fa-arrow-right me-2"></i> חזרה
+                        </button>
+                        <button class="btn btn-primary" onclick="nextStep()">
+                            המשך <i class="fas fa-arrow-left ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Other Income -->
+                <div class="step" id="step5">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h2 class="step-title">הכנסות אחרות</h2>
+                        <p class="step-subtitle">הכנסות נוספות שלא נכללו בקטגוריות הקודמות</p>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            הכנסות משכירות
+                            <span class="help-icon" title="הכנסות מהשכרת דירות או נכסים אחרים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rental_income_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rental_income_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            הכנסות מזכויות יוצרים
+                            <span class="help-icon" title="תמלוגים מספרים, מוזיקה, יצירות אמנות ופטנטים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="royalties_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="royalties_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            פרסים והגרלות
+                            <span class="help-icon" title="זכיות בהגרלות, מפעל הפיס ופרסים שונים">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="prizes_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="prizes_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            הכנסות מביטוח
+                            <span class="help-icon" title="תגמולי ביטוח שאינם פיצוי נזק">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="insurance_income_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="insurance_income_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            מתנות כספיות מהורים/קרובי משפחה
+                            <span class="help-icon" title="מתנות כספיות משמעותיות שחייבות בדיווח">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gifts_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gifts_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-secondary me-3" onclick="prevStep()">
+                            <i class="fas fa-arrow-right me-2"></i> חזרה
+                        </button>
+                        <button class="btn btn-primary" onclick="nextStep()">
+                            המשך <i class="fas fa-arrow-left ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Donations -->
+                <div class="step" id="step6">
+                    <div class="step-header">
+                        <div class="step-number">6</div>
+                        <h2 class="step-title">תרומות</h2>
+                        <p class="step-subtitle">תרומות לארגונים מוכרי תועלת הציבור</p>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            תרומות לעמותות מוכרי תועלת הציבור
+                            <span class="help-icon" title="תרומות לעמותות רשומות המזכות בניכוי מס">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="charity_donations_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="charity_donations_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            תרומות למוסדות חינוך
+                            <span class="help-icon" title="תרומות לבתי ספר, אוניברסיטאות ומכללות">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="education_donations_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="education_donations_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            תרומות לארגוני סיוע
+                            <span class="help-icon" title="תרומות לארגוני סיוע והצלה כמו מד״א, משטרה וכיבוי אש">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="aid_donations_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="aid_donations_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-item">
+                        <div class="question-text">
+                            תרומות דתיות (מעשר כספים)
+                            <span class="help-icon" title="תרומות דתיות כולל מעשר כספים למוסדות דת">?</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="religious_donations_self">
+                                <label class="checkbox-label">עבורך</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="religious_donations_spouse">
+                                <label class="checkbox-label">עבור בן/בת זוג</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-secondary me-3" onclick="prevStep()">
+                            <i class="fas fa-arrow-right me-2"></i> חזרה
+                        </button>
+                        <button class="btn btn-primary" onclick="nextStep()">
+                            המשך <i class="fas fa-arrow-left ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 7: Summary -->
+                <div class="step" id="step7">
+                    <div class="step-header">
+                        <div class="step-number">7</div>
+                        <h2 class="step-title">סיכום המסמכים הנדרשים</h2>
+                        <p class="step-subtitle">הנה רשימת המסמכים שצריך להכין בהתאם לתשובותיך</p>
+                    </div>
+
+                    <div class="summary-list">
+                        <h4 class="mb-4"><i class="fas fa-clipboard-list me-3"></i>המסמכים הנדרשים עבורך:</h4>
+                        <div id="requiredDocuments">
+                            <!-- Documents will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-4">
+                        <div class="alert alert-info">
+                            <i class="fas fa-envelope me-2"></i>
+                            <strong>הרשימה תישלח אליך במייל</strong><br>
+                            נשלח לך את הרשימה המלאה לכתובת: <span id="userEmail"></span>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-secondary me-3" onclick="prevStep()">
+                            <i class="fas fa-arrow-right me-2"></i> חזרה
+                        </button>
+                        <button class="btn btn-success" onclick="submitForm()">
+                            <i class="fas fa-paper-plane me-2"></i> סיים ושלח
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 8: Completion -->
+                <div class="step" id="step8">
+                    <div class="step-header">
+                        <div class="step-number">8</div>
+                        <h2 class="step-title">נשלח בהצלחה!</h2>
+                        <p class="step-subtitle">השאלון הושלם והרשימה נשלחה למייל שלך</p>
+                    </div>
+
+                    <div class="results-container">
+                        <i class="fas fa-check-circle fa-5x mb-4" style="color: #4facfe;"></i>
+                        <h3>תהליך הושלם בהצלחה!</h3>
+                        <div class="mt-4">
+                            <p class="lead">הרשימה המלאה של המסמכים הנדרשים נשלחה אליך במייל</p>
+                            <p><i class="fas fa-inbox me-2"></i><strong>בדוק את תיבת הדואר שלך</strong></p>
+                        </div>
+                        
+                        <div class="mt-5">
+                            <button class="btn btn-light" onclick="resetForm()">
+                                <i class="fas fa-redo me-2"></i> מלא שאלון חדש
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let currentStep = 1;
+        const totalSteps = 8;
+        let selectedDocuments = [];
+
+        // Document mapping
+        const documentMap = {
+            // Step 2 - Salaries and Benefits
+            'salary_self': 'טופס 106 - אישור הכנסות ממשכורת (עבורך)',
+            'salary_spouse': 'טופס 106 - אישור הכנסות ממשכורת (עבור בן/בת זוג)',
+            'unemployment_self': 'אישור דמי אבטלה (עבורך)',
+            'unemployment_spouse': 'אישור דמי אבטלה (עבור בן/בת זוג)',
+            'disability_pension_self': 'אישור קצבת נכות/אובדן כושר עבודה (עבורך)',
+            'disability_pension_spouse': 'אישור קצבת נכות/אובדן כושר עבודה (עבור בן/בת זוג)',
+            'freelance_self': 'אישורים על הכנסות מפרילנס (עבורך)',
+            'freelance_spouse': 'אישורים על הכנסות מפרילנס (עבור בן/בת זוג)',
+            'severance_self': 'אישור מענקי פרישה ופיצויים (עבורך)',
+            'severance_spouse': 'אישור מענקי פרישה ופיצויים (עבור בן/בת זוג)',
+            'pension_self': 'אישור קצבת פנסיה (עבורך)',
+            'pension_spouse': 'אישור קצבת פנסיה (עבור בן/בת זוג)',
+            'savings_funds_self': 'אישור פדיון קופות גמל וקרנות השתלמות (עבורך)',
+            'savings_funds_spouse': 'אישור פדיון קופות גמל וקרנות השתלמות (עבור בן/בת זוג)',
+            'employer_grants_self': 'אישור הענקות הוניות ממעסיק (עבורך)',
+            'employer_grants_spouse': 'אישור הענקות הוניות ממעסיק (עבור בן/בת זוג)',
+            
+            // Step 3 - Disability and Family
+            'academic_relief_self': 'תעודות אקדמיות/מקצועיות להקלה במס (עבורך)',
+            'academic_relief_spouse': 'תעודות אקדמיות/מקצועיות להקלה במס (עבור בן/בת זוג)',
+            'child_allowance_self': 'אישור קצבת ילדים מביטוח לאומי (עבורך)',
+            'child_allowance_spouse': 'אישור קצבת ילדים מביטוח לאומי (עבור בן/בת זוג)',
+            'alimony_self': 'אישור תשלום דמי מזונות (עבורך)',
+            'alimony_spouse': 'אישור תשלום דמי מזונות (עבור בן/בת זוג)',
+            'shared_household_self': 'אישור משק בית משותף (עבורך)',
+            'shared_household_spouse': 'אישור משק בית משותף (עבור בן/בת זוג)',
+            'maternity_self': 'אישור דמי לידה ושמירת הריון (עבורך)',
+            'maternity_spouse': 'אישור דמי לידה ושמירת הריון (עבור בן/בת זוג)',
+            'military_discharge_self': 'אישור שחרור מצה״ל/שירות לאומי (עבורך)',
+            'military_discharge_spouse': 'אישור שחרור מצה״ל/שירות לאומי (עבור בן/בת זוג)',
+            'reserves_self': 'אישור תשלומי מילואים (עבורך)',
+            'reserves_spouse': 'אישור תשלומי מילואים (עבור בן/בת זוג)',
+            'reserves_grants_self': 'אישור מענקי מילואים מקרן הסיוע (עבורך)',
+            'reserves_grants_spouse': 'אישור מענקי מילואים מקרן הסיוע (עבור בן/בת זוג)',
+            'new_immigrant_self': 'אישור תאריך עליה (עבורך)',
+            'new_immigrant_spouse': 'אישור תאריך עליה (עבור בן/בת זוג)',
+            'returning_resident_self': 'אישור תושב חוזר (עבורך)',
+            'returning_resident_spouse': 'אישור תושב חוזר (עבור בן/בת זוג)',
+            'priority_area_self': 'אישור מגורים באזור עדיפות לאומית (עבורך)',
+            'priority_area_spouse': 'אישור מגורים באזור עדיפות לאומית (עבור בן/בת זוג)',
+            
+            // Step 4 - Capital Market
+            'capital_gains_self': 'אישורי רווחי הון ממכירת נכסים (עבורך)',
+            'capital_gains_spouse': 'אישורי רווחי הון ממכירת נכסים (עבור בן/בת זוג)',
+            'dividends_self': 'אישורי דיבידנדים ממניות (עבורך)',
+            'dividends_spouse': 'אישורי דיבידנדים ממניות (עבור בן/בת זוג)',
+            'interest_self': 'אישורי ריבית מפקדונות וחסכונות (עבורך)',
+            'interest_spouse': 'אישורי ריבית מפקדונות וחסכונות (עבור בן/בת זוג)',
+            'capital_losses_self': 'אישורי הפסדי הון לקיזוז (עבורך)',
+            'capital_losses_spouse': 'אישורי הפסדי הון לקיזוז (עבור בן/בת זוג)',
+            'foreign_income_self': 'אישורי הכנסות מחו״ל (עבורך)',
+            'foreign_income_spouse': 'אישורי הכנסות מחו״ל (עבור בן/בת זוג)',
+            
+            // Step 5 - Other Income
+            'rental_income_self': 'אישורי הכנסות משכירות (עבורך)',
+            'rental_income_spouse': 'אישורי הכנסות משכירות (עבור בן/בת זוג)',
+            'royalties_self': 'אישורי הכנסות מזכויות יוצרים (עבורך)',
+            'royalties_spouse': 'אישורי הכנסות מזכויות יוצרים (עבור בן/בת זוג)',
+            'prizes_self': 'אישורי פרסים והגרלות (עבורך)',
+            'prizes_spouse': 'אישורי פרסים והגרלות (עבור בן/בת זוג)',
+            'insurance_income_self': 'אישורי הכנסות מביטוח (עבורך)',
+            'insurance_income_spouse': 'אישורי הכנסות מביטוח (עבור בן/בת זוג)',
+            'gifts_self': 'אישורי מתנות כספיות (עבורך)',
+            'gifts_spouse': 'אישורי מתנות כספיות (עבור בן/בת זוג)',
+            
+            // Step 6 - Donations
+            'charity_donations_self': 'קבלות תרומות לעמותות (עבורך)',
+            'charity_donations_spouse': 'קבלות תרומות לעמותות (עבור בן/בת זוג)',
+            'education_donations_self': 'קבלות תרומות למוסדות חינוך (עבורך)',
+            'education_donations_spouse': 'קבלות תרומות למוסדות חינוך (עבור בן/בת זוג)',
+            'aid_donations_self': 'קבלות תרומות לארגוני סיוע (עבורך)',
+            'aid_donations_spouse': 'קבלות תרומות לארגוני סיוע (עבור בן/בת זוג)',
+            'religious_donations_self': 'קבלות תרומות דתיות (עבורך)',
+            'religious_donations_spouse': 'קבלות תרומות דתיות (עבור בן/בת זוג)'
+        };
+
+        function updateProgressBar() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextStep() {
+            if (currentStep === 7) {
+                generateSummary();
+            }
+            
+            document.getElementById('step' + currentStep).classList.remove('active');
+            currentStep++;
+            document.getElementById('step' + currentStep).classList.add('active');
+            updateProgressBar();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevStep() {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            currentStep--;
+            document.getElementById('step' + currentStep).classList.add('active');
+            updateProgressBar();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function generateSummary() {
+            selectedDocuments = [];
+            
+            // Get all checked checkboxes
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                if (documentMap[checkbox.id]) {
+                    selectedDocuments.push(documentMap[checkbox.id]);
+                }
+            });
+
+            // Display documents in summary
+            const documentsContainer = document.getElementById('requiredDocuments');
+            documentsContainer.innerHTML = '';
+
+            if (selectedDocuments.length === 0) {
+                documentsContainer.innerHTML = '<div class="summary-item"><span>לא נבחרו מסמכים נוספים</span></div>';
+            } else {
+                selectedDocuments.forEach((doc, index) => {
+                    const docElement = document.createElement('div');
+                    docElement.className = 'summary-item';
+                    docElement.innerHTML = `
+                        <span><i class="fas fa-file-alt me-2"></i>${doc}</span>
+                        <i class="fas fa-check text-success"></i>
+                    `;
+                    documentsContainer.appendChild(docElement);
+                });
+            }
+
+            // Update email in summary
+            const email = document.getElementById('email').value || 'לא הוזן מייל';
+            document.getElementById('userEmail').textContent = email;
+        }
+
+        function submitForm() {
+            // Show loading animation
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>שולח...';
+            button.disabled = true;
+            
+            // Simulate sending email
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Move to completion step
+                document.getElementById('step' + currentStep).classList.remove('active');
+                currentStep = 8;
+                document.getElementById('step' + currentStep).classList.add('active');
+                updateProgressBar();
+                
+                // Show confetti
+                confetti();
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        }
+
+        function resetForm() {
+            // Reset all form fields
+            document.querySelectorAll('input').forEach(input => {
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+            document.querySelectorAll('select').forEach(select => {
+                select.selectedIndex = 0;
+            });
+
+            // Reset to step 1
+            document.getElementById('step' + currentStep).classList.remove('active');
+            currentStep = 1;
+            document.getElementById('step' + currentStep).classList.add('active');
+            updateProgressBar();
+            
+            // Clear selected documents
+            selectedDocuments = [];
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function confetti() {
+            // Create confetti animation
+            for (let i = 0; i < 50; i++) {
+                createConfettiPiece();
+            }
+        }
+
+        function createConfettiPiece() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#feca57'][Math.floor(Math.random() * 5)];
+            confetti.style.zIndex = '9999';
+            confetti.style.borderRadius = '50%';
+            confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        // Show/hide marriage year field based on marital status
+        document.getElementById('maritalStatus').addEventListener('change', function() {
+            const marriageYearDiv = document.getElementById('marriageYearDiv');
+            if (this.value === 'married') {
+                marriageYearDiv.style.display = 'block';
+            } else {
+                marriageYearDiv.style.display = 'none';
+            }
+        });
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+
+        // Initialize progress bar
+        updateProgressBar();
+
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>
+            '
