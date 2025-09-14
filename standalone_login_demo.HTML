@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>התחברות - ניהול תקציב חתונה</title>
+    
+    <!-- Bootstrap RTL CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-pink: #f8d7da;
+            --primary-pink-dark: #f5c2c7;
+            --gray-dark: #495057;
+            --gray-medium: #6c757d;
+            --gray-light: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            color: var(--gray-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* עיצוב כפתורים ראשיים */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-pink-dark) 100%);
+            border: none;
+            color: var(--gray-dark);
+            font-weight: 500;
+            border-radius: 12px;
+            padding: 12px 24px;
+            box-shadow: 0 4px 15px rgba(248, 215, 218, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-pink-dark) 0%, #f1b6bb 100%);
+            color: var(--gray-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(248, 215, 218, 0.4);
+        }
+
+        .btn-primary:focus, .btn-primary:active {
+            background: linear-gradient(135deg, var(--primary-pink-dark) 0%, #f1b6bb 100%);
+            color: var(--gray-dark);
+            box-shadow: 0 0 0 0.2rem rgba(248, 215, 218, 0.5);
+        }
+
+        .btn-outline-secondary {
+            border-color: var(--gray-medium);
+            color: var(--gray-medium);
+            border-radius: 12px;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--gray-medium);
+            border-color: var(--gray-medium);
+            transform: translateY(-1px);
+        }
+
+        /* עיצוב כותרות */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--gray-dark);
+            font-weight: 600;
+        }
+
+        .display-4 {
+            color: var(--gray-dark);
+            font-weight: 300;
+            font-size: 3rem;
+        }
+
+        /* עיצוב קלטים מודרני */
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-pink-dark);
+            box-shadow: 0 0 0 0.2rem rgba(248, 215, 218, 0.25);
+            background: white;
+        }
+
+        .form-control-lg {
+            padding: 16px 20px;
+            font-size: 1.1rem;
+        }
+
+        /* עיצוב כרטיסים מודרני */
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-pink-dark) 100%);
+            border: none;
+            font-weight: 500;
+            color: var(--gray-dark);
+            border-radius: 20px 20px 0 0 !important;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* עיצוב הודעות */
+        .alert {
+            border: none;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d1e7dd 0%, #c3e6cb 100%);
+            color: #0f5132;
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #cff4fc 0%, #b8daff 100%);
+            color: #055160;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffda6a 100%);
+            color: #664d03;
+        }
+
+        /* אנימציות מודרניות */
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* אפקטים חזותיים מודרניים */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* רספונסיביות מתקדמת */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            .display-4 {
+                font-size: 2rem;
+            }
+
+            .btn-lg {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* הוספת גלוב זעיר לרקע */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(248, 215, 218, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(248, 215, 218, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* עיצוב מיוחד לאמוג'י */
+        .emoji {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* עיצוב input מיוחד לקוד */
+        .code-input {
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.8rem !important;
+            letter-spacing: 0.3em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <main class="d-flex align-items-center justify-content-center min-vh-100 py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <!-- כרטיס התחברות -->
+                    <div class="card shadow-lg fade-in">
+                        <div class="card-body">
+                            <!-- Header -->
+                            <div class="text-center mb-4">
+                                <div class="emoji">💒</div>
+                                <h2 class="h3 mb-2">ברוכים הבאים!</h2>
+                                <p class="text-muted mb-4">נהלו את תקציב החתונה שלכם בקלות</p>
+                            </div>
+
+                            <!-- טופס הזנת מייל -->
+                            <div id="email-form">
+                                <form class="needs-validation" novalidate>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label fw-medium">כתובת מייל:</label>
+                                        <input 
+                                            type="email" 
+                                            class="form-control form-control-lg" 
+                                            id="email" 
+                                            name="email" 
+                                            placeholder="example@gmail.com"
+                                            required 
+                                        >
+                                        <div class="invalid-feedback">
+                                            אנא הזן כתובת מייל תקינה
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary btn-lg w-100 mb-3" onclick="showCodeInput()">
+                                        <span class="fs-5">📧</span> שלח קוד התחברות
+                                    </button>
+                                </form>
+
+                                <!-- מידע על תקופת הנסיון -->
+                                <div class="alert alert-info text-center">
+                                    <small>
+                                        <strong>✨ 3 ימים חינם!</strong><br>
+                                        תקופת נסיון ללא התחייבות
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- טופס הזנת קוד (מוסתר בהתחלה) -->
+                            <div id="code-form" style="display: none;">
+                                <div class="text-center mb-4">
+                                    <div class="alert alert-success">
+                                        <small>
+                                            <strong>📬 קוד נשלח לכתובת:</strong><br>
+                                            <span id="sent-email">example@gmail.com</span>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <form class="needs-validation" novalidate>
+                                    <div class="mb-3">
+                                        <label for="code" class="form-label fw-medium">הזן את הקוד שקיבלת:</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control form-control-lg code-input" 
+                                            id="code" 
+                                            name="code" 
+                                            placeholder="123456"
+                                            maxlength="6"
+                                            value="123456"
+                                        >
+                                        <small class="form-text text-muted text-center d-block">
+                                            הקוד תקף ל-10 דקות
+                                        </small>
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary btn-lg w-100 mb-3" onclick="verifyCode()">
+                                        <span class="fs-5">🔐</span> אמת קוד והתחבר
+                                    </button>
+                                </form>
+
+                                <!-- כפתור חזרה -->
+                                <div class="text-center">
+                                    <button class="btn btn-outline-secondary" onclick="showEmailInput()">
+                                        ← חזור להזנת מייל
+                                    </button>
+                                </div>
+
+                                <!-- מידע נוסף -->
+                                <div class="mt-4 p-3 glass-effect rounded">
+                                    <small class="text-muted">
+                                        <strong>לא קיבלת קוד? 🤔</strong><br>
+                                        • בדוק את תיקיית הספאם<br>
+                                        • המתן מספר דקות ונסה שוב<br>
+                                        • ודא שהמייל נכתב נכון
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- מידע על שיתוף -->
+                            <div class="mt-4 p-3 glass-effect rounded">
+                                <small class="text-muted">
+                                    <strong>💑 עבודה בזוג:</strong><br>
+                                    לאחר ההרשמה תוכלו להזמין את בן/בת הזוג שלכם לניהול משותף
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- מידע נוסף -->
+                    <div class="text-center mt-4">
+                        <small class="text-muted">
+                            באמצעות הכניסה לאתר אתם מסכימים לתנאי השימוש ומדיניות הפרטיות
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- הודעת הצלחה מדמו -->
+    <div id="demo-success" class="position-fixed top-0 start-50 translate-middle-x mt-3" style="display: none; z-index: 1000;">
+        <div class="alert alert-success alert-dismissible fade show shadow-lg">
+            <strong>🎉 מעולה!</strong> בדמו אמיתי הייתם מועברים ליצירת אירוע חדש
+            <button type="button" class="btn-close" onclick="this.parentElement.parentElement.style.display='none'"></button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript מותאם -->
+    <script>
+        // מעבר לטופס קוד
+        function showCodeInput() {
+            const email = document.getElementById('email').value;
+            if (!email || !email.includes('@')) {
+                alert('אנא הזן כתובת מייל תקינה');
+                return;
+            }
+            
+            document.getElementById('sent-email').textContent = email;
+            document.getElementById('email-form').style.display = 'none';
+            document.getElementById('code-form').style.display = 'block';
+            
+            // פוקוס על שדה הקוד
+            setTimeout(() => {
+                document.getElementById('code').focus();
+            }, 300);
+        }
+
+        // חזרה לטופס מייל
+        function showEmailInput() {
+            document.getElementById('email-form').style.display = 'block';
+            document.getElementById('code-form').style.display = 'none';
+            document.getElementById('email').focus();
+        }
+
+        // אימות קוד
+        function verifyCode() {
+            const code = document.getElementById('code').value;
+            if (code.length !== 6) {
+                alert('אנא הזן קוד בן 6 ספרות');
+                return;
+            }
+            
+            // הצג הודעת הצלחה
+            document.getElementById('demo-success').style.display = 'block';
+            
+            // באפליקציה האמיתית - מעבר לדף הבא
+            setTimeout(() => {
+                console.log('במציאות: מעבר ליצירת אירוع חדש');
+            }, 2000);
+        }
+
+        // אוטו-סלקט בשדה הקוד
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeInput = document.getElementById('code');
+            if (codeInput) {
+                codeInput.addEventListener('click', function() {
+                    this.select();
+                });
+                
+                // הגבלה לספרות בלבד
+                codeInput.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^0-9]/g, '').substring(0, 6);
+                });
+            }
+        });
+
+        // אנימציה מתעכבת
+        setTimeout(() => {
+            document.querySelector('.card').style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                document.querySelector('.card').style.transform = 'scale(1)';
+            }, 200);
+        }, 500);
+    </script>
+</body>
+</html>
